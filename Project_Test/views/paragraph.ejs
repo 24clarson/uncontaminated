@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/x-icon" href="red-blue-loop.ico">
+    <title>HTML and CSS Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="/lib/codemirror.css">
+    <script src="/lib/codemirror.js"></script>
+    <script src="/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="/mode/css/css.js"></script>
+    <script src="/mode/javascript/javascript.js"></script>
+    <script src="/mode/xml/xml.js"></script>
+    <script src="/addon/display/placeholder.js"></script>
+</head>
+<body>
+    <div class="banner">
+        <div class="title">
+            <a href="index.html"><h1>HTML and CSS Editor</h1></a>
+        </div>
+        <div class="dropdown">
+            <button onclick="dropDown()" class="dropbtn">Labs</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="header.html">h tag</a>
+                <a href="paragraph.html">p tag</a>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="project">
+            <div class="instructions">
+                <h2>P tags</h2>
+                <p>In this lab you create a paragraph (p), tag. This tag allows you to put generic text on a webpage. You can style the tag with CSS, by changing the color in the lower code area.</p>
+            </div>
+            <hr>
+            <div class="feedback">
+                Objectives for this lab:
+                <ul>
+                    <li><p id="grade1">Create a p tag</p></li>
+                </ul>
+            </div>
+        </div>
+        <div class="code-area">
+            <textarea id="htmlCode" placeholder="HTML Code..."></textarea>
+            <hr>
+            <textarea id="cssCode" placeholder="CSS Code...">p {
+    color: black;
+}</textarea>
+        </div>
+        <div class="preview-area">
+            <iframe id="preview-window"></iframe>
+        </div>
+        <script>
+            var htmlEditor = CodeMirror.fromTextArea(document.getElementById("htmlCode"), {
+                mode: "htmlmixed"
+            })
+            var cssEditor = CodeMirror.fromTextArea(document.getElementById("cssCode"), {
+                mode: "css"
+            })
+            function showPreview() {
+                var htmlCode = htmlEditor.getValue();
+                var cssCode = "<style>" + cssEditor.getValue() + "</style>";
+                var frame = document.getElementById("preview-window").contentWindow.document;
+                frame.open();
+                frame.write(htmlCode+cssCode);
+                frame.close();
+            }
+            let goals = [['grade1', /<p>.*<\/p>/]];
+            function checkAnswer(requirements) {
+                var htmlString = htmlEditor.getValue();
+                var cssString = cssEditor.getValue();
+                for (let i = 0; i < requirements.length; i++) {
+                    grade = document.getElementById(goals[i][0]);
+                    if (requirements[i][1].test(htmlString)) {
+                        grade.style.color = 'green';
+                    }
+                    else {
+                        grade.style.color = 'red';
+                    }
+                }
+            }
+            showPreview();
+            checkAnswer(goals);
+            htmlEditor.on("change",function(){showPreview()});
+            cssEditor.on("change",function(){showPreview()});
+            htmlEditor.on("change",function(){checkAnswer(goals)});
+            cssEditor.on("change",function(){checkAnswer(goals)});
+        </script>
+    </div>
+</body>
+</html>
