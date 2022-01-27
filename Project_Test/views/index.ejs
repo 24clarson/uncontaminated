@@ -16,6 +16,7 @@
     <script src="/addon/display/placeholder.js"></script>
 </head>
 <body>
+    y>
     <div class="banner">
         <div class="title">
             <a href="index.html"><h1>HTML and CSS Editor</h1></a>
@@ -29,32 +30,7 @@
         </div>
     </div>
     <div class="content">
-        <div class="code-area" style="width:50%">
-            <textarea id="htmlCode" placeholder="HTML Code..."></textarea>
-            <hr>
-            <textarea id="cssCode" placeholder="CSS Code..."></textarea>
-        </div>
-        <div class="preview-area" style="width:50%">
-            <iframe id="preview-window"></iframe>
-        </div>
-        <script>
-            var htmlEditor = CodeMirror.fromTextArea(document.getElementById("htmlCode"), {
-                mode: "htmlmixed"
-            })
-            var cssEditor = CodeMirror.fromTextArea(document.getElementById("cssCode"), {
-                mode: "css"
-            })
-            function showPreview() {
-                var htmlCode = htmlEditor.getValue();
-                var cssCode = "<style>" + cssEditor.getValue() + "</style>";
-                var frame = document.getElementById("preview-window").contentWindow.document;
-                frame.open();
-                frame.write(htmlCode+cssCode);
-                frame.close();
-            }
-            htmlEditor.on("change",function(){showPreview()});
-            cssEditor.on("change",function(){showPreview()});
-        </script>
+        <p class="big">HOMEPAGE</p>
     </div>
 </body>
 </html>
