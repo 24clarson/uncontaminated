@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -31,29 +31,29 @@
     <div class="content">
         <div class="project">
             <div class="instructions">
-                <h2>H Tags</h2>
+                <h2><%= labName%></h2>
                 <br>
-                <p>H tags are used to make titles in html. There are six types: h1, h2, h3, h4, h5, and h6. The lower the number, the bigger the title.
-                For example, the title "H Tags" is an h2 element. The code area already has an h1 tag. Change it to h2 and add your own h3 and h6 tags.</p>
+                <p><%= instructions%></p>
             </div>
             <hr>
             <div class="feedback">
                 Objectives for this lab:
                 <ul>
-                    <li><p id="grade1">Create an h2 tag</p></li>
-                    <li><p id="grade2">Create an h3 tag</p></li>
-                    <li><p id="grade3">Create an h6 tag</p></li>
+                    <% for (let instruction of criteria) { %>
+                    <li id=<%= instruction[0]%>><%= instruction[2]%></li>
+                    <% } %>
                 </ul>
             </div>
         </div>
         <div class="code-area">
-            <textarea id="htmlCode" placeholder="HTML Code...">&lt;h1&gt;This is an h1 tag&lt;/h1&gt;</textarea>
+            <textarea id="htmlCode" placeholder="HTML Code..."><%= htmlStarterCode%></textarea>
             <hr>
-            <textarea id="cssCode" placeholder="CSS Code..."></textarea>
+            <textarea id="cssCode" placeholder="CSS Code..."><%= cssStarterCode%></textarea>
         </div>
         <div class="preview-area">
             <iframe id="preview-window"></iframe>
         </div>
+        
         <script>
             var htmlEditor = CodeMirror.fromTextArea(document.getElementById("htmlCode"), {
                 mode: "htmlmixed"
@@ -69,12 +69,11 @@
                 frame.write(htmlCode+cssCode);
                 frame.close();
             }
-            let goals = [['grade1', /<h2>.*<\/h2>/], ['grade2', /<h3>.*<\/h3>/], ['grade3', /<h6>.*<\/h6>/]];
             function checkAnswer(requirements) {
                 var htmlString = htmlEditor.getValue();
                 var cssString = cssEditor.getValue();
                 for (let i = 0; i < requirements.length; i++) {
-                    grade = document.getElementById(goals[i][0]);
+                    grade = document.getElementById(requirements[i][0]);
                     if (requirements[i][1].test(htmlString)) {
                         grade.style.color = 'green';
                     }
@@ -84,12 +83,15 @@
                 }
             }
             showPreview();
-            checkAnswer(goals);
-            htmlEditor.on("change",function(){showPreview()});
-            cssEditor.on("change",function(){showPreview()});
-            htmlEditor.on("change",function(){checkAnswer(goals)});
-            cssEditor.on("change",function(){checkAnswer(goals)});
+            checkAnswer(criteria);
+            htmlEditor.on("change",function(){
+                showPreview()
+                checkAnswer(criteria)});
+            cssEditor.on("change",function(){
+                showPreview()
+                checkAnswercriteria});
+
         </script>
     </div>
 </body>
-</html> -->
+</html>

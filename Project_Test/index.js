@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const path =require('path');
+const path = require('path');
+const lessons = require("./lessons.js")
 
 app.use(express.static( path.join(__dirname, 'public')))
 
@@ -8,11 +9,11 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'))
 
 app.get('/header.html', (req, res) => {
-    res.render('header.ejs')
+    res.render('lessonTemplate.ejs', lessons.header)
 })
 
 app.get('/paragraph.html', (req, res) => {
-    res.render('paragraph.ejs')
+    res.render('lessonTemplate.ejs', lessons.paragraph)
 })
 
 app.get('/index.html', (req, res) => {
